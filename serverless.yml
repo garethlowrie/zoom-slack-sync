@@ -1,4 +1,4 @@
-service: status-sync-2
+service: status-sync
 
 plugins:
   - '@kingdarboja/serverless-plugin-typescript'
@@ -11,9 +11,6 @@ custom:
   slack_install_path: slack
   slack_install_redirect: https://slack.com
   slack_client_scopes: "bot commands"
-
-  # Secrets
-  slack_table_name: slack-bot-why
 
   slack_verification_token: "${env:SLACK_VERIFICATION_TOKEN}"
   slack_client_id: "${env:SLACK_CLIENT_ID}"
@@ -30,8 +27,9 @@ custom:
   # Log all events to CloudWatch
   slack_enable_logging: true
 
-  # The dynamodb table to store OAuth access data
-  status_sync_table_name: status-sync-data-table-5
+  # The dynamodb tables
+  slack_table_name: slack-table
+  status_sync_table_name: status-sync-data-table
   
 provider:
   name: aws

@@ -1,7 +1,5 @@
 export const OAUTH_TOKEN = process.env.OAUTH_TOKEN!;
 
-export const DATA_TABLE_NAME = process.env.DATA_TABLE_NAME!;
-
 export const STATUS_SYNC_TABLE_NAME = process.env.STATUS_SYNC_TABLE_NAME!;
 
 export const LOCALE = process.env.LOCALE!;
