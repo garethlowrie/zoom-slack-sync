@@ -21,7 +21,7 @@ All you need to do is:
 
 ---
 
-## 👷 1. Installation
+## 👷 Installation
 
 First of all you will need to
 
