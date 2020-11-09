@@ -182,12 +182,18 @@ Have you followed steps 1-4 and tried testing your integration and is something 
     -   Log in to the _AWS Console_ and go to _Lambda_, you should see three lambdas called:
         -   **status-sync-dev-zoom-status-change-authorize-redirect**
         -   **status-sync-dev-zoom-status-change**
-        -   **status-sync-dev-slack**.
+        -   **status-sync-dev-slack**
 -   **Check our your DynamoDB table**
     -   Log in to the _AWS Console_ and go to _DynamoDb_, you should see a table called:
         -   **status-sync-data-table**
     -   When a user completes the OAuth flow they should appear in your DynamoDb table.
     -   When a user turns off the integration they should be removed from your DynamoDb table.
+
+---
+
+## ⭐ Like this?
+
+If you found this project useful please ⭐ this repo in the top right of this page :D
 
 ---
 
