@@ -19,27 +19,27 @@ import { removeUserFromSlackSyncDataTable } from "../../utils/removeUserFromSlac
  * @param event SlackCommandEvent
  */
 export const slackOauthHandler = async ({ user_id }: SlackCommandEvent) => {
-	try {
-		const { profile } = await getSlackUserById(user_id);
-		const { enabled } = await getUserFromDynamoDb(profile.email);
+    try {
+        const { profile } = await getSlackUserById(user_id);
+        const { enabled } = await getUserFromDynamoDb(profile.email);
 
-		if (!enabled) {
-			await initiateAuthFlow(user_id);
-			return;
-		}
+        if (!enabled) {
+            await initiateAuthFlow(user_id);
+            return;
+        }
 
-		await removeUserFromSlackSyncDataTable(profile.email);
+        await removeUserFromSlackSyncDataTable(profile.email);
 
-		await postMessage({
-			channel: user_id,
-			text: MESSAGE_MAP.off
-		});
-	} catch (e) {
-		console.log("Error in slackOauth", e);
+        await postMessage({
+            channel: user_id,
+            text: MESSAGE_MAP.off
+        });
+    } catch (e) {
+        console.log("Error in slackOauth", e);
 
-		await postMessage({
-			channel: user_id,
-			text: MESSAGE_MAP.friendlyError
-		});
-	}
+        await postMessage({
+            channel: user_id,
+            text: MESSAGE_MAP.friendlyError
+        });
+    }
 };

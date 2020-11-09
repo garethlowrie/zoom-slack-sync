@@ -1,0 +1,4 @@
+**/.serverless/**
+**/.vscode/**
+**/.yarn/**
+**/node_modules/**

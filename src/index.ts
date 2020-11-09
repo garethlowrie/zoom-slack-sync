@@ -7,5 +7,5 @@ export const handler = slack.handler.bind(slack);
 slack.on("/" + SLACK_SLASH_COMMAND, slackOauthHandler);
 
 process.on("unhandledRejection", (err: any) => {
-	console.error("unhandledRejection", err);
+    console.error("unhandledRejection", err);
 });

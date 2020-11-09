@@ -9,14 +9,15 @@
 		"build": "serverless package",
 		"deploy": "serverless deploy",
 		"invoke": "serverless invoke",
-		"test": "serverless invoke local"
+		"test": "serverless invoke local",
+		"prettify": "prettier --write 'src/**/*.ts'"
 	},
 	"dependencies": {
 		"@slack/web-api": "^5.13.0",
 		"aws-sdk": "2.427.0",
 		"axios": "^0.21.0",
 		"lodash": "4.17.11",
-		"prettier": "1.16.4",
+		"prettier": "^2.1.2",
 		"serverless-slack": "1.0.26"
 	},
 	"devDependencies": {
