@@ -11,7 +11,7 @@ All you need to do is:
 3. Clone this repo
 4. Copy and fill out the .env file
 5. Sign in to AWS on the CLI
-6. Deploy with a single `yarn deploy` command
+6. Deploy with a single 👀 `yarn deploy` command 
 
 ## ⚙️ Prerequisites
 
@@ -64,7 +64,7 @@ yarn
 
 First add your Bot/User Token Scopes.
 
--   Bot Token Scopes: `commands`
+-   Bot Token Scopes: `commands` `chat:write` `im:write`  
 -   User Token Scopes: `users.profile:write`.
 
 Then go ahead and hit the **Install App to Workspace** button to add your App to Slack.  
@@ -103,8 +103,8 @@ Environment variables prefixed with `CUSTOM_` are optional.
 I've outlined where you can find the values below.
 
 ```javascript
-CUSTOM_EMOJI=:calling:      <This can be any emoji code in your Slack Workspace default is omitted is :calling:>
-CUSTOM_STATUS="On a Zoom"   <Default: On a zoom>
+CUSTOM_EMOJI=:zoom:         <Default :calling: - This can be any emoji code in your Slack Workspace (custom too) >
+CUSTOM_STATUS="On a call"   <Default: On a Zoom>
 
 AWS_REGION_DEFAULT=         <AWS - e.g. eu-west-1>
 SLACK_APP_ID=               <Slack App - Basic Information Tab>
