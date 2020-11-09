@@ -12,6 +12,8 @@ export const ZOOM_VERIFICATION_TOKEN = process.env.ZOOM_VERIFICATION_TOKEN!;
 
 export const SLACK_CLIENT_SECRET = process.env.CLIENT_SECRET!;
 
+export const ZOOM_APP_JWT = process.env.ZOOM_APP_JWT!;
+
 export const SLACK_CLIENT_ID = process.env.CLIENT_ID!;
 
 export const SLACK_APP_ID = process.env.SLACK_APP_ID!;

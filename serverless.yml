@@ -25,6 +25,7 @@ custom:
   zoom_verification_token: "${env:ZOOM_VERIFICATION_TOKEN}"
   custom_emoji: "${env:CUSTOM_EMOJI}"
   custom_status: "${env:CUSTOM_STATUS}"
+  zoom_app_jwt: "${env:ZOOM_APP_JWT}"
 
   # Log all events to CloudWatch
   slack_enable_logging: true
@@ -64,6 +65,7 @@ provider:
     OAUTH_TOKEN: ${self:custom.slack_oauth_token}
     CUSTOM_EMOJI: ${self:custom.custom_emoji}
     CUSTOM_STATUS: ${self:custom.custom_status}
+    ZOOM_APP_JWT: ${self:custom.zoom_app_jwt}
 
 functions:
   slack:

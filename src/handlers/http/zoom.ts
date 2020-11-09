@@ -6,9 +6,10 @@ import {
 	ZOOM_VERIFICATION_TOKEN
 } from "../../../env";
 import { getUserFromDynamoDb } from "../../utils/getUserFromDynamoDb";
+import { getZoomUser } from "../../utils/getZoomUser";
 import { persistPreviousStatus } from "../../utils/persistPreviousStatus";
 import { updateSlackStatus } from "../../utils/updateSlackStatus";
-import { MESSAGE_MAP, ZOOM_IN_MEETING_STATUS } from "../constants";
+import { MESSAGE_MAP } from "../constants";
 
 /**
  * This handler is called by our Status Syncer Zoom webhook app.
@@ -23,14 +24,51 @@ import { MESSAGE_MAP, ZOOM_IN_MEETING_STATUS } from "../constants";
  * If the user within the event has enabled the feature we hit slacks api and update their status.
  *
  */
+
+type MeetingParticipantLeftEvent = {
+	event: "meeting.participant_left";
+	payload: {
+		object: {
+			participant: {
+				id: string;
+			};
+		};
+	};
+};
+
+type MeetingParticipantJoinedEvent = {
+	event: "meeting.participant_joined";
+	payload: {
+		object: {
+			participant: {
+				id: string;
+			};
+		};
+	};
+};
+
+type MeetingEvent = MeetingParticipantJoinedEvent | MeetingParticipantLeftEvent;
+
+const isJoinEvent = (
+	event: MeetingEvent
+): event is MeetingParticipantJoinedEvent =>
+	event.event === "meeting.participant_joined";
+
+type ZoomHandlerEvent = Omit<APIGatewayEvent, "body"> & {
+	body: MeetingEvent;
+};
+
 export const handler = async (
-	event: APIGatewayEvent,
+	event: ZoomHandlerEvent,
 	_context: Context,
 	callback: Callback
 ) => {
+	const zoomEvent = event.body;
+
+	const hasUserJoinedAMeeting = isJoinEvent(zoomEvent);
 	const verificationToken = get(event, "headers.Authorization");
-	const zoomUserStatus = get(event, "body.payload.object.presence_status");
-	const zoomUserEmail = get(event, "body.payload.object.email");
+
+	const zoomUser = await getZoomUser(zoomEvent.payload.object.participant.id);
 
 	if (ZOOM_VERIFICATION_TOKEN !== verificationToken) {
 		return callback(null, {
@@ -41,30 +79,16 @@ export const handler = async (
 		});
 	}
 
-	if (zoomUserStatus == null || zoomUserEmail == null) {
-		return callback(null, {
-			statusCode: 400,
-			body: JSON.stringify({
-				errorMessage:
-					zoomUserStatus == null
-						? MESSAGE_MAP.missingUserStatus
-						: MESSAGE_MAP.missingUserEmail
-			})
-		});
-	}
-
-	const { enabled, user } = await getUserFromDynamoDb(zoomUserEmail);
+	const { enabled, user } = await getUserFromDynamoDb(zoomUser.email);
 
 	if (enabled && user) {
-		const isInMeeting = zoomUserStatus === ZOOM_IN_MEETING_STATUS;
-
-		if (isInMeeting) {
+		if (hasUserJoinedAMeeting) {
 			await persistPreviousStatus(user.userId);
 		}
 
 		const result = await updateSlackStatus({
-			text: isInMeeting ? CUSTOM_STATUS : user.prevStatusText,
-			emoji: isInMeeting ? CUSTOM_EMOJI : user.prevStatusEmoji,
+			text: hasUserJoinedAMeeting ? CUSTOM_STATUS : user.prevStatusText,
+			emoji: hasUserJoinedAMeeting ? CUSTOM_EMOJI : user.prevStatusEmoji,
 			userAccessToken: user.token
 		});
 
