@@ -20,6 +20,32 @@ All you need to do is:
 -   Zoom user account with Developer permissions
 -   Slack user account with the ability to create apps and add them to a workspace.
 
+
+---
+
+## How it works
+### See it in action
+The gif below outlines what this repo will allow you to achieve.    
+
+<img src="https://github.com/garethlowrie/zoom-slack-sync/raw/main/images/demo.gif" width="500">
+
+
+
+### OAuth Flow
+Once set up, a user in your Slack workspace can start syncing their Zoom and Slack status' by typing `/statusupdater`.    
+The user will then be asked to authorise the Slack app.     
+
+<img src="https://github.com/garethlowrie/zoom-slack-sync/raw/main/images/oauth-start.png" width="500">
+
+After authorisation the user will be informed the sync is now live.     
+
+<img src="https://github.com/garethlowrie/zoom-slack-sync/raw/main/images/oauth-redirect.png" width="500">
+
+
+The user can stop syncing their status' at any time by retyping the slash command `/statusupdater`.     
+
+<img src="https://github.com/garethlowrie/zoom-slack-sync/raw/main/images/stop-sync.png" width="500">
+
 ---
 
 ## 👷 Installation
