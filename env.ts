@@ -16,14 +16,16 @@ export const SLACK_CLIENT_ID = process.env.CLIENT_ID!;
 
 export const SLACK_APP_ID = process.env.SLACK_APP_ID!;
 
-export const SLACK_SLASH_COMMAND = process.env.SLACK_SLASH_COMMAND!;
-
 export const SLACK_REDIRECT_URI = process.env.SLACK_REDIRECT_URI!;
 
+export const CUSTOM_SLACK_SLASH_COMMAND = process.env.CUSTOM_SLACK_SLASH_COMMAND
+    ? process.env.CUSTOM_SLACK_SLASH_COMMAND
+    : "statusupdater";
+
 export const CUSTOM_EMOJI = process.env.CUSTOM_EMOJI
-	? process.env.CUSTOM_EMOJI
-	: ":calling:";
+    ? process.env.CUSTOM_EMOJI
+    : ":calling:";
 
 export const CUSTOM_STATUS = process.env.CUSTOM_STATUS
-	? process.env.CUSTOM_STATUS
-	: "On a Zoom";
+    ? process.env.CUSTOM_STATUS
+    : "On a Zoom";

@@ -1,7 +1,7 @@
-import { SLACK_SLASH_COMMAND } from "../../env";
+import { CUSTOM_SLACK_SLASH_COMMAND } from "../../env";
 
 export const MESSAGE_MAP = {
-    on: `:slack: :heart: :zoom:  All set up! I will sync your Slack status with your Zoom status. To stop simply type /${SLACK_SLASH_COMMAND} again.`,
+    on: `:slack: :heart: :zoom:  All set up! I will sync your Slack status with your Zoom status. To stop simply type /${CUSTOM_SLACK_SLASH_COMMAND} again.`,
     off:
         ":slack: :broken_heart: :zoom:  It's over. I have stopped syncing your Slack status with your Zoom status.",
     friendlyError:
