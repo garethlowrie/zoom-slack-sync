@@ -12,6 +12,7 @@ All you need to do is:
 4. Copy and fill out the .env file
 5. Sign in to AWS on the CLI
 6. Deploy with a single 👀 `yarn deploy` command 
+7. Users can (en/dis)able this integration by typing `/statusupdater` in your Slack workspace.
 
 ## ⚙️ Prerequisites
 
