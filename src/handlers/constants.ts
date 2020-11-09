@@ -19,7 +19,3 @@ export const MESSAGE_MAP = {
     couldntUpdateSlackStatus: "Could not update Slack status",
     notEnabled: "Zoom/Slack Sync is not enabled"
 };
-
-// Zoom uses the Do_Not_Disturb status when in a meeting
-// https://devforum.zoom.us/t/check-if-a-user-is-on-a-call-or-available/6140/8
-export const ZOOM_IN_MEETING_STATUS = "Do_Not_Disturb";
