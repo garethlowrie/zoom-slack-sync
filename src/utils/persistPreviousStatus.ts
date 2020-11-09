@@ -17,9 +17,9 @@ export const persistPreviousStatus = async (userId: string) => {
 			Key: {
 				email: profile.email
 			},
-			UpdateExpression: `SET prevStatusEmoji = :icon, prevStatusText = :text`,
+			UpdateExpression: `SET prevStatusEmoji = :emoji, prevStatusText = :text`,
 			ExpressionAttributeValues: {
-				":icon": profile.status_emoji,
+				":emoji": profile.status_emoji,
 				":text": profile.status_text
 			},
 			ReturnValues: "ALL_NEW"
