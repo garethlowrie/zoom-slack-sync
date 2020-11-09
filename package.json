@@ -1,5 +1,5 @@
 {
-	"name": "zoom-slack-aws-sync",
+	"name": "zoom-slack-sync",
 	"description": "Zoom Slack Status Sync",
 	"version": "1.0",
 	"author": "Gareth Lowrie <gareth@theculturedengineer.com>",
