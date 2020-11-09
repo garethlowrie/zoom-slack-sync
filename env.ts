@@ -22,8 +22,8 @@ export const SLACK_REDIRECT_URI = process.env.SLACK_REDIRECT_URI!;
 
 export const CUSTOM_EMOJI = process.env.CUSTOM_EMOJI
 	? process.env.CUSTOM_EMOJI
-	: ":zoom:";
+	: ":calling:";
 
-export const CUSTOM_STATUS = process.env.CUSTOM_EMOJI
+export const CUSTOM_STATUS = process.env.CUSTOM_STATUS
 	? process.env.CUSTOM_STATUS
-	: "On a zoom";
+	: "On a Zoom";

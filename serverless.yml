@@ -23,6 +23,8 @@ custom:
   slack_redirect_uri: "${env:SLACK_REDIRECT_URI}"
   slack_oauth_token: "${env:SLACK_OAUTH_TOKEN}"
   zoom_verification_token: "${env:ZOOM_VERIFICATION_TOKEN}"
+  custom_emoji: "${env:CUSTOM_EMOJI}"
+  custom_status: "${env:CUSTOM_STATUS}"
 
   # Log all events to CloudWatch
   slack_enable_logging: true
@@ -60,6 +62,8 @@ provider:
     ZOOM_VERIFICATION_TOKEN: ${self:custom.zoom_verification_token}
     ENABLE_LOGGING: ${self:custom.slack_enable_logging}
     OAUTH_TOKEN: ${self:custom.slack_oauth_token}
+    CUSTOM_EMOJI: ${self:custom.custom_emoji}
+    CUSTOM_STATUS: ${self:custom.custom_status}
 
 functions:
   slack:
