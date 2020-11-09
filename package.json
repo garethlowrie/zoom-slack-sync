@@ -1,0 +1,32 @@
+{
+	"name": "zoom-slack-aws-sync",
+	"description": "Zoom Slack Status Sync",
+	"version": "1.0",
+	"author": "Gareth Lowrie <gareth@theculturedengineer.com>",
+	"license": "MIT",
+	"scripts": {
+		"logs": "serverless logs",
+		"build": "serverless package",
+		"deploy": "serverless deploy",
+		"invoke": "serverless invoke",
+		"test": "serverless invoke local"
+	},
+	"dependencies": {
+		"@slack/web-api": "^5.13.0",
+		"aws-sdk": "2.427.0",
+		"lodash": "4.17.11",
+		"prettier": "1.16.4",
+		"serverless-slack": "1.0.26"
+	},
+	"devDependencies": {
+		"@kingdarboja/serverless-plugin-typescript": "^1.4.1",
+		"@types/aws-lambda": "^8.10.64",
+		"@types/lodash": "4.14.122",
+		"@types/node": "11.11.0",
+		"@types/serverless": "1.18.1",
+		"serverless": "1.38.0",
+		"serverless-dotenv-plugin": "^3.1.0",
+		"ts-node": "^9.0.0",
+		"typescript": "^3.9.7"
+	}
+}

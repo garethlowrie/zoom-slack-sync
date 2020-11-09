@@ -1,0 +1,155 @@
+service: status-sync-2
+
+plugins:
+  - '@kingdarboja/serverless-plugin-typescript'
+  - serverless-dotenv-plugin
+
+custom:
+  locale: en-GB
+  timezone: Europe/London
+  slack_event_path: slack
+  slack_install_path: slack
+  slack_install_redirect: https://slack.com
+  slack_client_scopes: "bot commands"
+
+  # Secrets
+  slack_table_name: slack-bot-why
+
+  slack_verification_token: "${env:SLACK_VERIFICATION_TOKEN}"
+  slack_client_id: "${env:SLACK_CLIENT_ID}"
+  slack_client_secret: "${env:SLACK_CLIENT_SECRET}"
+  slack_app_id: "${env:SLACK_APP_ID}"
+  slack_slash_command: "${env:SLACK_SLASH_COMMAND}"
+  slack_redirect_uri: "${env:SLACK_REDIRECT_URI}"
+  slack_oauth_token: "${env:SLACK_OAUTH_TOKEN}"
+  zoom_verification_token: "${env:ZOOM_VERIFICATION_TOKEN}"
+
+  # Log all events to CloudWatch
+  slack_enable_logging: true
+
+  # The dynamodb table to store OAuth access data
+  status_sync_table_name: status-sync-data-table-5
+  
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${env:AWS_REGION_DEFAULT}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${env:AWS_REGION_DEFAULT}:*:*"
+
+  environment:
+    LOCALE: ${self:custom.locale}
+    TIMEZONE: ${self:custom.timezone}
+    TABLE_NAME: ${self:custom.slack_table_name}
+    STATUS_SYNC_TABLE_NAME: ${self:custom.status_sync_table_name}
+    CLIENT_ID: ${self:custom.slack_client_id}
+    SLACK_APP_ID: ${self:custom.slack_app_id}
+    SLACK_REDIRECT_URI: ${self:custom.slack_redirect_uri}
+    SLACK_SLASH_COMMAND: ${self:custom.slack_slash_command}
+    CLIENT_SECRET: ${self:custom.slack_client_secret}
+    VERIFICATION_TOKEN: ${self:custom.slack_verification_token}
+    ZOOM_VERIFICATION_TOKEN: ${self:custom.zoom_verification_token}
+    ENABLE_LOGGING: ${self:custom.slack_enable_logging}
+    OAUTH_TOKEN: ${self:custom.slack_oauth_token}
+
+functions:
+  slack:
+    handler: src/index.handler
+    events:
+      ## Slash Commands, Events, and Interactive Messages
+      - http:
+          path: ${self:custom.slack_event_path}
+          method: post
+          integration: lambda
+          response:
+            template: $input.path('$')
+
+  zoom-status-change:
+    handler: src/handlers/http/zoom.handler
+    events:
+      - http:
+          path: zoom-status-change
+          method: post
+          integration: lambda
+          request:
+            parameters:
+              querystrings:
+                code: true
+                state: true
+
+          response:
+            statusCodes:
+              201:
+                pattern: ""
+              401:
+                pattern: http.*
+                headers:
+                  Location: integration.response.body.errorMessage
+                  Cache-Control: "'no-cache, no-store, must-revalidate'"
+              400:
+                pattern: http.*
+                headers:
+                  Location: integration.response.body.errorMessage
+                  Cache-Control: "'no-cache, no-store, must-revalidate'"
+
+  zoom-status-change-authorize-redirect:
+    handler: src/handlers/http/slackOauthRedirect.handler
+    events:
+      - http:
+          path: zoom-status-change-authorize-redirect
+          method: get
+          integration: lambda
+          request:
+            parameters:
+              querystrings:
+                code: true
+                state: true
+
+          response:
+            statusCodes:
+              302:
+                pattern: ""
+                headers:
+                  Location: integration.response.body.headers.Location
+                  Cache-Control: "'no-cache, no-store, must-revalidate'"
+
+resources:
+  Resources:
+    ServerlessDynamoDbTable:
+      Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.slack_table_name}
+
+    ServerlessStatusSyncDynamoDbTable:
+      Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.status_sync_table_name}

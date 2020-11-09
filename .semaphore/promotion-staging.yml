@@ -1,0 +1,25 @@
+version: v1.0
+name: Deploy to Staging
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: Staging
+    task:
+      secrets:
+        - name: AWS_STAGING_SERVERLESS
+        - name: SLACK
+
+      prologue:
+        commands:
+          - checkout
+
+      jobs:
+        - name: Slack
+          commands:
+            - cd packages/slack
+            - nvm use
+            - yarn install
+            - yarn deploy
