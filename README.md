@@ -100,22 +100,25 @@ You will need to [create a JWT Zoom app](https://marketplace.zoom.us/develop/cre
 ### 🚀 3. Deploy
 
 Create a `.env` file in the root directory and add the following.  
-Environment variables prefixed with `CUSTOM_` are optional.  
+Environment variables prefixed with `CUSTOM_` are optional and have defaults assigned.  
 I've outlined where you can find the values below.
 
 ```javascript
-CUSTOM_EMOJI=:zoom:         <Default :calling: - This can be any emoji code in your Slack Workspace (custom too) >
-CUSTOM_STATUS="On a call"   <Default: On a Zoom>
+CUSTOM_EMOJI=:zoom:                   <Default: :calling: - This can be any emoji code in your Slack Workspace (custom too)>
+CUSTOM_STATUS="On a call"             <Default: On a Zoom>
+CUSTOM_SLACK_SLASH_COMMAND=syncstatus <Default: statusupdater>
 
-AWS_REGION_DEFAULT=         <AWS - e.g. eu-west-1>
-SLACK_APP_ID=               <Slack App - Basic Information Tab>
-SLACK_VERIFICATION_TOKEN=   <Slack App - Basic Information Tab>
-SLACK_CLIENT_ID=            <Slack App - Basic Information Tab>
-SLACK_CLIENT_SECRET=        <Slack App - Basic Information Tab>
-SLACK_OAUTH_TOKEN=          <Slack App - OAuth and Permissions - Bot User OAuth Access Token>
-ZOOM_VERIFICATION_TOKEN=    <Zoom App - Feature Tab>
+AWS_REGION_DEFAULT=                   <AWS - e.g. eu-west-1>
 
-SLACK_REDIRECT_URI=         <This will be output after running yarn deploy, add then deploy again>
+SLACK_APP_ID=                         <Slack App - Basic Information Tab>
+SLACK_VERIFICATION_TOKEN=             <Slack App - Basic Information Tab>
+SLACK_CLIENT_ID=                      <Slack App - Basic Information Tab>
+SLACK_CLIENT_SECRET=                  <Slack App - Basic Information Tab>
+SLACK_OAUTH_TOKEN=                    <Slack App - OAuth and Permissions - Bot User OAuth Access Token>
+
+ZOOM_VERIFICATION_TOKEN=              <Zoom App - Feature Tab>
+
+SLACK_REDIRECT_URI=                   <This will be output after running yarn deploy, see below..>
 ```
 
 Deploy your serverless application
