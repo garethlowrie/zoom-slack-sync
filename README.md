@@ -118,6 +118,7 @@ You will need to [create a JWT Zoom app](https://marketplace.zoom.us/develop/cre
         -   **Name:** This can be anything
         -   **Event type 1**: `Meeting - Participant/Host joined meeting`
         -   **Event type 2**: `Meeting - Participant/Host left meeting`.
+        -   **Event type 3**: `Meeting - End meeting`.
     -   **Event notification endpoint URL**: Come back to this in Step 4 (put a dummy url for now)
 -   Tab: **Activate** - Don't activate yet. Come back to this in Step 4.
 
