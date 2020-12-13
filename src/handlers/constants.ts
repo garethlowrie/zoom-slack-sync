@@ -17,5 +17,7 @@ export const MESSAGE_MAP = {
     missingUserStatus: "Zoom user status not available",
     missingUserEmail: "Zoom user email not available",
     couldntUpdateSlackStatus: "Could not update Slack status",
-    notEnabled: "Zoom/Slack Sync is not enabled"
+    notEnabled: "Zoom/Slack Sync is not enabled",
+    allparticipantsUpdated: "All participants updated",
+    errorParticipantsUpdated: "Could not update all participants"
 };
